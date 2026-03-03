@@ -4,387 +4,165 @@ html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Practice - Multiplication & Division (Tables 1-12)</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Comic Sans MS', 'Arial', sans-serif;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #5a67d8;
-            margin-bottom: 10px;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-        .header-info {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #666;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math Practice – Multiplication & Division</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background: #f0f0f0;
+    }
+    .container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 26px;
+    }
+    .header-info {
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 14px;
+        color: #555;
+    }
+    .student-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+    .student-info input {
+        padding: 4px;
+        font-size: 14px;
+    }
+    .controls {
+        margin: 15px 0;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    button {
+        padding: 10px 18px;
+        border: none;
+        background: #5a67d8;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    .print-button { background: #38a169; }
+    .check-button { background: #d69e2e; }
+    .questions-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+    .question {
+        display: flex;
+        justify-content: space-between;
+        background: #f7fafc;
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+    .question-text { font-size: 16px; }
+    .question input {
+        width: 50px;
+        font-size: 15px;
+        padding: 3px;
+    }
+    @media print {
+        body { padding: 0; background: white; }
+        .container { padding: 5px; }
+        h1 { margin: 0; font-size: 18px; }
+        .header-info { font-size: 10px; margin-bottom: 5px; }
+        .controls, .timer, .score-display { display: none !important; }
         .student-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #f7fafc;
-            border-radius: 10px;
+            font-size: 10px;
+            margin-bottom: 5px;
         }
-        .student-info div {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .student-info label {
-            font-weight: bold;
-            color: #4a5568;
-        }
-        .student-info input {
-            border: 2px solid #cbd5e0;
-            border-radius: 5px;
-            padding: 5px 10px;
-            font-size: 16px;
-        }
-        .controls {
-            text-align: center;
-            margin-bottom: 30px;
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        button {
-            background: #5a67d8;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 16px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        button:hover {
-            background: #4c51bf;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
-        }
-        .print-button {
-            background: #48bb78;
-        }
-        .print-button:hover {
-            background: #38a169;
-        }
-        .check-button {
-            background: #ed8936;
-        }
-        .check-button:hover {
-            background: #dd6b20;
-        }
+        .student-info input { padding: 2px; font-size: 10px; }
         .questions-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 4px;
         }
         .question {
-            padding: 10px;
-            background: #f7fafc;
-            border-radius: 8px;
-            border: 2px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.3s;
+            padding: 4px;
+            border: 1px solid #000;
         }
-        .question:hover {
-            border-color: #5a67d8;
-            background: #edf2ff;
-        }
-        .question-number {
-            font-size: 12px;
-            color: #718096;
-            font-weight: bold;
-            margin-right: 8px;
-        }
-        .question-text {
-            font-size: 18px;
-            font-weight: bold;
-            color: #2d3748;
-        }
+        .question-text { font-size: 11px; }
         .question input {
-            width: 60px;
-            padding: 5px;
-            border: 2px solid #cbd5e0;
-            border-radius: 5px;
-            font-size: 16px;
-            text-align: center;
-            font-weight: bold;
+            width: 30px;
+            font-size: 11px;
+            padding: 1px;
         }
-        .question input:focus {
-            outline: none;
-            border-color: #5a67d8;
-            background: #edf2ff;
-        }
-        .question.correct input {
-            background: #c6f6d5;
-            border-color: #48bb78;
-        }
-        .question.incorrect input {
-            background: #fed7d7;
-            border-color: #f56565;
-        }
-        .score-display {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: #5a67d8;
-            margin: 20px 0;
-            padding: 20px;
-            background: #edf2ff;
-            border-radius: 10px;
-            display: none;
-        }
-        .timer {
-            text-align: center;
-            font-size: 20px;
-            color: #4a5568;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        @media print {
-            body {
-                background: white;
-                padding: 10px;
-            }
-            .container {
-                box-shadow: none;
-                padding: 20px;
-            }
-            .controls {
-                display: none;
-            }
-            .timer {
-                display: none;
-            }
-            .score-display {
-                display: none !important;
-            }
-            .questions-grid {
-                grid-template-columns: repeat(6, 1fr);
-                gap: 10px;
-                font-size: 14px;
-            }
-            .question {
-                padding: 8px;
-            }
-            .question input {
-                border: 1px solid #000;
-                background: white !important;
-            }
-            h1 {
-                font-size: 1.8em;
-            }
-        }
-        .fun-message {
-            text-align: center;
-            font-size: 18px;
-            color: #5a67d8;
-            margin-top: 20px;
-            font-style: italic;
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>🎯 Math Champions Practice Sheet 🎯</h1>
-        <div class="header-info">
-            <p>Multiplication & Division Tables (1-12) • 144 Questions</p>
-        </div>
-        <div class="student-info">
-            <div>
-                <label for="name">Name:</label>
-                <input type="text" id="name" placeholder="Enter your name">
-            </div>
-            <div>
-                <label for="date">Date:</label>
-                <input type="date" id="date">
-            </div>
-            <div>
-                <label for="class">Class:</label>
-                <input type="text" id="class" placeholder="Year 4">
-            </div>
-        </div>
-        <div class="timer" id="timer">Time: 00:00</div>
-        <div class="controls">
-            <button onclick="generateNewQuestions()">🎲 New Questions</button>
-            <button onclick="startTimer()">⏱️ Start Timer</button>
-            <button onclick="stopTimer()">⏸️ Stop Timer</button>
-            <button class="check-button" onclick="checkAnswers()">✓ Check Answers</button>
-            <button class="print-button" onclick="window.print()">🖨️ Print Sheet</button>
-        </div>
-        <div class="score-display" id="scoreDisplay"></div>
-        <div class="questions-grid" id="questionsGrid"></div>
-        <div class="fun-message" id="funMessage"></div>
+<div class="container">
+    <h1>Maths Practice Sheet</h1>
+    <div class="header-info">Multiplication & Division (1–12) • 144 Questions</div>
+    <div class="student-info">
+        <div>Name: <input type="text" id="name"></div>
+        <div>Date: <input type="date" id="date"></div>
+        <div>Class: <input type="text" id="class"></div>
     </div>
-    <script>
-        let questions = [];
-        let timerInterval = null;
-        let seconds = 0;
-        // Set today's date
-        document.getElementById('date').valueAsDate = new Date();
-        function generateRandomQuestion() {
-            const num1 = Math.floor(Math.random() * 12) + 1;
-            const num2 = Math.floor(Math.random() * 12) + 1;
-            const isMultiplication = Math.random() < 0.5;
-            
-            if (isMultiplication) {
-                return {
-                    text: `${num1} × ${num2} =`,
-                    answer: num1 * num2,
-                    type: 'multiplication'
-                };
-            } else {
-                const product = num1 * num2;
-                return {
-                    text: `${product} ÷ ${num1} =`,
-                    answer: num2,
-                    type: 'division'
-                };
-            }
+    <div class="controls">
+        <button onclick="generateNewQuestions()">New Questions</button>
+        <button class="check-button" onclick="checkAnswers()">Check Answers</button>
+        <button class="print-button" onclick="window.print()">Print</button>
+    </div>
+    <div class="questions-grid" id="questionsGrid"></div>
+</div>
+<script>
+let questions = [];
+function randomQ() {
+    const n1 = Math.floor(Math.random()*12)+1;
+    const n2 = Math.floor(Math.random()*12)+1;
+    const mult = Math.random() < 0.5;
+    if (mult) {
+        return { text: `${n1} × ${n2} =`, answer: n1*n2 };
+    } else {
+        return { text: `${n1*n2} ÷ ${n1} =`, answer: n2 };
+    }
+}
+function generateNewQuestions() {
+    const grid = document.getElementById("questionsGrid");
+    grid.innerHTML = "";
+    questions = [];
+    for (let i = 0; i < 144; i++) {
+        const q = randomQ();
+        questions.push(q);
+        let div = document.createElement("div");
+        div.className = "question";
+        div.innerHTML = `
+            <span class="question-text">${i+1}. ${q.text}</span>
+            <input type="number" id="q${i}">
+        `;
+        grid.appendChild(div);
+    }
+}
+function checkAnswers() {
+    let correct = 0;
+    for (let i = 0; i < 144; i++) {
+        const input = document.getElementById("q" + i);
+        const user = parseInt(input.value);
+        if (user === questions[i].answer) {
+            input.style.background = "#c6f6d5";
+        } else {
+            input.style.background = "#fed7d7";
         }
-        function generateNewQuestions() {
-            questions = [];
-            const grid = document.getElementById('questionsGrid');
-            grid.innerHTML = '';
-            
-            // Reset score display
-            document.getElementById('scoreDisplay').style.display = 'none';
-            document.getElementById('funMessage').innerText = '';
-            // Generate 144 questions
-            for (let i = 0; i < 144; i++) {
-                const question = generateRandomQuestion();
-                questions.push(question);
-                
-                const questionDiv = document.createElement('div');
-                questionDiv.className = 'question';
-                questionDiv.innerHTML = `
-                    <div>
-                        <span class="question-number">${i + 1}.</span>
-                        <span class="question-text">${question.text}</span>
-                    </div>
-                    <input type="number" id="answer${i}" placeholder="?">
-                `;
-                grid.appendChild(questionDiv);
-            }
-            // Reset timer
-            stopTimer();
-            seconds = 0;
-            updateTimerDisplay();
-        }
-        function checkAnswers() {
-            let correct = 0;
-            const questionDivs = document.querySelectorAll('.question');
-            
-            questions.forEach((question, index) => {
-                const input = document.getElementById(`answer${index}`);
-                const userAnswer = parseInt(input.value);
-                
-                questionDivs[index].classList.remove('correct', 'incorrect');
-                
-                if (userAnswer === question.answer) {
-                    correct++;
-                    questionDivs[index].classList.add('correct');
-                } else if (!isNaN(userAnswer)) {
-                    questionDivs[index].classList.add('incorrect');
-                }
-            });
-            const percentage = Math.round((correct / 144) * 100);
-            const scoreDisplay = document.getElementById('scoreDisplay');
-            scoreDisplay.innerHTML = `
-                Score: ${correct} / 144 (${percentage}%)
-                ${getScoreEmoji(percentage)}
-            `;
-            scoreDisplay.style.display = 'block';
-            // Fun message
-            const funMessage = document.getElementById('funMessage');
-            funMessage.innerText = getFunMessage(percentage);
-            // Stop timer when checking answers
-            stopTimer();
-        }
-        function getScoreEmoji(percentage) {
-            if (percentage >= 95) return '🏆 Outstanding!';
-            if (percentage >= 85) return '⭐ Excellent!';
-            if (percentage >= 75) return '😊 Great job!';
-            if (percentage >= 65) return '👍 Good effort!';
-            if (percentage >= 50) return '💪 Keep practicing!';
-            return '📚 More practice will help!';
-        }
-        function getFunMessage(percentage) {
-            const messages = {
-                95: "You're a Math Superstar! Amazing work!",
-                85: "Fantastic job! You're really getting the hang of this!",
-                75: "Well done! Your hard work is paying off!",
-                65: "Good effort! Keep practicing and you'll be even better!",
-                50: "Nice try! Practice makes perfect - you've got this!",
-                0: "Don't give up! Every champion started with practice!"
-            };
-            for (let threshold of [95, 85, 75, 65, 50, 0]) {
-                if (percentage >= threshold) {
-                    return messages[threshold];
-                }
-            }
-        }
-        function startTimer() {
-            if (timerInterval) return;
-            
-            timerInterval = setInterval(() => {
-                seconds++;
-                updateTimerDisplay();
-            }, 1000);
-        }
-        function stopTimer() {
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-            }
-        }
-        function updateTimerDisplay() {
-            const minutes = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            document.getElementById('timer').innerText = 
-                `Time: ${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-        }
-        // Generate initial questions when page loads
-        generateNewQuestions();
-        // Allow Enter key to move to next input
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const inputs = Array.from(document.querySelectorAll('.question input'));
-                const currentIndex = inputs.indexOf(document.activeElement);
-                if (currentIndex > -1 && currentIndex < inputs.length - 1) {
-                    inputs[currentIndex + 1].focus();
-                }
-            }
-        });
-    </script>
+    }
+}
+document.getElementById('date').valueAsDate = new Date();
+generateNewQuestions();
+</script>
 </body>
 </html>
