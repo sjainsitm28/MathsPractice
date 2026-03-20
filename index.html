@@ -1,167 +1,154 @@
-html
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Math Practice – Multiplication & Division</title>
+
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        padding: 20px;
-        background: #f0f0f0;
-    }
-    .container {
-        max-width: 900px;
-        margin: auto;
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-    }
-    h1 {
-        text-align: center;
-        margin-bottom: 10px;
-        font-size: 26px;
-    }
-    .header-info {
-        text-align: center;
-        margin-bottom: 10px;
-        font-size: 14px;
-        color: #555;
-    }
-    .student-info {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 15px;
-        font-size: 14px;
-    }
-    .student-info input {
-        padding: 4px;
-        font-size: 14px;
-    }
-    .controls {
-        margin: 15px 0;
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-    button {
-        padding: 10px 18px;
-        border: none;
-        background: #5a67d8;
-        color: white;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 14px;
-    }
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+    .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 10px; }
+    h1 { text-align: center; margin-bottom: 10px; font-size: 26px; }
+    .header-info { text-align: center; margin-bottom: 10px; font-size: 14px; color: #555; }
+
+    .student-info { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 14px; }
+    .student-info input { padding: 4px; font-size: 14px; }
+
+    .controls { margin: 15px 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    select, button { padding: 8px 14px; font-size: 14px; border-radius: 5px; border: 1px solid #999; }
+
+    button { border: none; background: #5a67d8; color: white; cursor: pointer; }
     .print-button { background: #38a169; }
     .check-button { background: #d69e2e; }
-    .questions-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
-    }
-    .question {
-        display: flex;
-        justify-content: space-between;
-        background: #f7fafc;
-        padding: 8px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
-    }
+
+    .questions-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .question { display: flex; justify-content: space-between; align-items: center; background: #f7fafc;
+                 padding: 8px; border-radius: 6px; border: 1px solid #ccc; }
     .question-text { font-size: 16px; }
-    .question input {
-        width: 50px;
-        font-size: 15px;
-        padding: 3px;
-    }
+    .question input { width: 50px; font-size: 15px; padding: 3px; text-align: center; }
+
     @media print {
         body { padding: 0; background: white; }
         .container { padding: 5px; }
         h1 { margin: 0; font-size: 18px; }
         .header-info { font-size: 10px; margin-bottom: 5px; }
-        .controls, .timer, .score-display { display: none !important; }
-        .student-info {
-            font-size: 10px;
-            margin-bottom: 5px;
-        }
+        .controls, .score-display { display: none !important; }
+        .student-info { font-size: 10px; margin-bottom: 5px; }
         .student-info input { padding: 2px; font-size: 10px; }
-        .questions-grid {
-            grid-template-columns: repeat(6, 1fr);
-            gap: 4px;
-        }
-        .question {
-            padding: 4px;
-            border: 1px solid #000;
-        }
+
+        .questions-grid { grid-template-columns: repeat(6, 1fr); gap: 4px; }
+        .question { padding: 4px; border: 1px solid #000; }
         .question-text { font-size: 11px; }
-        .question input {
-            width: 30px;
-            font-size: 11px;
-            padding: 1px;
-        }
+        .question input { width: 30px; font-size: 11px; padding: 1px; }
     }
 </style>
 </head>
+
 <body>
 <div class="container">
-    <h1>Maths Practice Sheet</h1>
-    <div class="header-info">Multiplication & Division (1–12) • 144 Questions</div>
+    <h1>Math Practice Generator</h1>
+    <div class="header-info">Generate Multiplication or Division Worksheets (1–12)</div>
+
     <div class="student-info">
         <div>Name: <input type="text" id="name"></div>
         <div>Date: <input type="date" id="date"></div>
         <div>Class: <input type="text" id="class"></div>
     </div>
+
     <div class="controls">
-        <button onclick="generateNewQuestions()">New Questions</button>
+        <label>Question Type:
+            <select id="qType">
+                <option value="mixed">Mixed</option>
+                <option value="multiplication">Multiplication</option>
+                <option value="division">Division</option>
+            </select>
+        </label>
+
+        <label>Difficulty:
+            <select id="difficulty">
+                <option value="easy">Easy (1–5)</option>
+                <option value="medium">Medium (1–8)</option>
+                <option value="hard">Difficult (1–12)</option>
+            </select>
+        </label>
+
+        <button onclick="generateNewQuestions()">Generate Sheet</button>
         <button class="check-button" onclick="checkAnswers()">Check Answers</button>
         <button class="print-button" onclick="window.print()">Print</button>
     </div>
+
     <div class="questions-grid" id="questionsGrid"></div>
 </div>
+
 <script>
 let questions = [];
-function randomQ() {
-    const n1 = Math.floor(Math.random()*12)+1;
-    const n2 = Math.floor(Math.random()*12)+1;
-    const mult = Math.random() < 0.5;
-    if (mult) {
-        return { text: `${n1} × ${n2} =`, answer: n1*n2 };
+
+document.getElementById('date').valueAsDate = new Date();
+
+function getRange(level) {
+    if (level === "easy") return 5;
+    if (level === "medium") return 8;
+    return 12;
+}
+
+function createQuestion(type, max) {
+    const n1 = Math.floor(Math.random() * max) + 1;
+    const n2 = Math.floor(Math.random() * max) + 1;
+
+    if (type === "multiplication") {
+        return { text: `${n1} × ${n2} =`, answer: n1 * n2 };
+    } 
+    if (type === "division") {
+        const product = n1 * n2;
+        return { text: `${product} ÷ ${n1} =`, answer: n2 };
+    }
+
+    // for mixed
+    if (Math.random() < 0.5) {
+        return { text: `${n1} × ${n2} =`, answer: n1 * n2 };
     } else {
-        return { text: `${n1*n2} ÷ ${n1} =`, answer: n2 };
+        const product = n1 * n2;
+        return { text: `${product} ÷ ${n1} =`, answer: n2 };
     }
 }
+
 function generateNewQuestions() {
     const grid = document.getElementById("questionsGrid");
     grid.innerHTML = "";
     questions = [];
+
+    const qType = document.getElementById("qType").value;
+    const diff = document.getElementById("difficulty").value;
+    const max = getRange(diff);
+
     for (let i = 0; i < 144; i++) {
-        const q = randomQ();
+        const q = createQuestion(qType, max);
         questions.push(q);
-        let div = document.createElement("div");
+
+        const div = document.createElement("div");
         div.className = "question";
         div.innerHTML = `
-            <span class="question-text">${i+1}. ${q.text}</span>
+            <span class="question-text">${i + 1}. ${q.text}</span>
             <input type="number" id="q${i}">
         `;
         grid.appendChild(div);
     }
 }
+
 function checkAnswers() {
-    let correct = 0;
     for (let i = 0; i < 144; i++) {
         const input = document.getElementById("q" + i);
         const user = parseInt(input.value);
         if (user === questions[i].answer) {
-            input.style.background = "#c6f6d5";
+            input.style.background = "#c6f6d5"; // green
+        } else if (!isNaN(user)) {
+            input.style.background = "#fed7d7"; // red
         } else {
-            input.style.background = "#fed7d7";
+            input.style.background = "white";
         }
     }
 }
-document.getElementById('date').valueAsDate = new Date();
+
 generateNewQuestions();
 </script>
 </body>
